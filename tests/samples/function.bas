@@ -1,0 +1,8 @@
+10 REM User Defined Functions
+20 DEF FNS(X) = X * X
+30 DEF FNC(X) = X * X * X
+40 PRINT "ENTER A NUMBER";
+50 INPUT N
+60 PRINT "SQUARE ="; FNS(N)
+70 PRINT "CUBE ="; FNC(N)
+80 END
