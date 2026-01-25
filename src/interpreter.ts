@@ -479,12 +479,14 @@ export class Interpreter {
     const currentIndex = this.state["currentLineIndex"];
     const lines = this.state["lineNumbers"];
     
+    let forLineIndex = -1;
     let forLine: ProgramLine | null = null;
     for (let i = currentIndex - 1; i >= 0; i--) {
       const line = this.state["programLines"].get(lines[i])!;
       if (line.statement.type === "ForStatement" &&
           line.statement.controlVariable.name === stmt.controlVariable.name) {
         forLine = line;
+        forLineIndex = i;
         break;
       }
     }
@@ -505,7 +507,9 @@ export class Interpreter {
     
     if (shouldContinue) {
       this.state.setNumeric(stmt.controlVariable.name, next);
-      this.state.gotoLine(forLine.lineNumber);
+      // Jump to the line AFTER the FOR statement, not to the FOR line itself
+      // This prevents re-executing the FOR (which would reset the variable)
+      this.state["currentLineIndex"] = forLineIndex + 1;
       this.jumpedThisStatement = true;
     }
   }

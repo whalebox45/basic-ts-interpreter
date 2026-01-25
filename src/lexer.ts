@@ -334,6 +334,20 @@ export class Lexer {
 
     // Check if it's a keyword
     if (Lexer.KEYWORDS.has(word)) {
+      // Special handling for REM: consume rest of line as remark-string
+      if (word === "REM") {
+        let remark = "";
+        while (this.currentChar !== null && !this.isNewLine(this.currentChar)) {
+          remark += this.currentChar;
+          this.advance();
+        }
+        return {
+          type: "REM",
+          value: remark.trim(), // Store the remark text
+          location
+        };
+      }
+      
       return {
         type: word as TokenType,
         value: word,

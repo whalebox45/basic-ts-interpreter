@@ -406,15 +406,9 @@ export class Parser {
 
   // REM statement
   private parseRemarkStatement(location: SourceLocation): RemarkStatement {
-    this.advance(); // consume REM
+    const comment = String(this.currentToken.value); // Get remark text from token
+    this.advance(); // consume REM token
     
-    // Collect all remaining tokens until EOL as comment
-    let comment = "";
-    while (!this.check("EOL") && !this.check("EOF")) {
-      comment += this.currentToken.value;
-      this.advance();
-    }
-
     return { type: "RemarkStatement", comment, location };
   }
 
