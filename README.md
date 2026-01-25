@@ -196,6 +196,10 @@ basic-ts/
 - 字串長度：最多 18 個字元
 - 陣列下標：預設範圍 0-10（可用 `OPTION BASE 1` 改為 1-10）
 
+### 實作說明
+
+> **免責聲明**：本直譯器使用 JavaScript/TypeScript 的 IEEE 754 雙精度浮點數（64 位元）進行數值運算。雖然這提供了約 15-17 位有效數字的精度，遠超過 ECMA-55 規範要求的最低 6 位，但浮點數運算仍存在固有的精度限制。例如，`0.1 + 0.2` 的結果並非精確的 `0.3`。對於需要精確十進位運算的應用場景，請留意此限制。
+
 ## 相關連結
 
 - [ECMA-55 標準文件](https://ecma-international.org/publications-and-standards/standards/ecma-55/)
