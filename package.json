@@ -1,17 +1,20 @@
 {
   "name": "basic-ts",
-  "module": "index.ts",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run index.ts",
     "dev": "bun --watch index.ts",
-    "test": "bun test"
+    "start": "bun run index.ts",
+    "test": "bun test",
+    "build:exe": "mkdir -p bin && bun build index.ts --compile --outfile bin/basic",
+    "build:exe:all": "mkdir -p bin && bun run build:exe:macos && bun run build:exe:linux && bun run build:exe:windows",
+    "build:exe:macos": "mkdir -p bin && bun build index.ts --compile --target=bun-darwin-arm64 --outfile bin/basic-macos",
+    "build:exe:linux": "mkdir -p bin && bun build index.ts --compile --target=bun-linux-x64 --outfile bin/basic-linux",
+    "build:exe:windows": "mkdir -p bin && bun build index.ts --compile --target=bun-windows-x64 --outfile bin/basic-windows.exe"
   },
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
   }
 }
