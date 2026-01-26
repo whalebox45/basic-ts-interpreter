@@ -1,4 +1,4 @@
-# basic-ts
+# basic-ts-interpreter
 
 一個以 TypeScript 實作的 ECMA-55 Minimal BASIC 直譯器。
 
@@ -168,7 +168,7 @@ bash tests/run_all_samples.sh
 ## 專案結構
 
 ```
-basic-ts/
+basic-ts-interpreter/
 ├── index.ts              # 程式進入點
 ├── package.json          # 專案設定
 ├── tsconfig.json         # TypeScript 設定

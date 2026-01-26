@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "basic-ts",
+      "name": "basic-ts-interpreter",
       "devDependencies": {
         "@types/bun": "latest",
       },
