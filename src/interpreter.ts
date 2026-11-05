@@ -357,9 +357,12 @@ export class Interpreter {
  private executePrint(stmt: Statement & { type: "PrintStatement" }): void {
   let suppressNewline = false;
 
-  // Handle empty PRINT statement (just outputs a newline)
+  // Empty PRINT ends the current line: flush whatever earlier
+  // `PRINT ...;` statements left in the buffer, then the newline.
   if (stmt.items.length === 0) {
-    this.state.outputHandler("\n");
+    this.state.outputHandler(this.printBuffer + "\n");
+    this.printBuffer = "";
+    this.printColumn = 0;
     return;
   }
 
@@ -394,17 +397,14 @@ export class Interpreter {
 
 
   private async executeInput(stmt: Statement & { type: "InputStatement" }): Promise<void> {
-    // Flush any pending output before showing input prompt
-    this.flushPrintBuffer();
-    
-    // Output prompt
-    this.state.outputHandler("? ");
+    // Pending output stays on the same line as the "? " prompt,
+    // e.g. PRINT "HOW MANY NUMBERS"; / INPUT N  ->  HOW MANY NUMBERS? 
+    this.state.outputHandler(this.printBuffer + "? ");
+    this.printBuffer = "";
+    this.printColumn = 0;
 
-    // Get input
+    // Get input (the terminal / piped-input echo already ends the line)
     const input = await this.state.inputHandler();
-    
-    // Output newline after input
-    this.state.outputHandler("\n");
     
     const values = input.split(",").map(s => s.trim());
 
